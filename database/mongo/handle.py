@@ -44,7 +44,7 @@ def j_log(source):
 
 class MangoDBHandle(Jzmongo.mongoDB):
     def __init__(self):
-        super(Handle, self).__init__(host="localhost", port=27017)
+        super(MangoDBHandle, self).__init__(host="localhost", port=27017)
 
     def getCursor(self, c, t):
         '''collection and table name, return cursor'''
