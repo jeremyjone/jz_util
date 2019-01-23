@@ -42,7 +42,7 @@ def j_log(source):
 
 
 
-class Handle(Jzmongo.mongoDB):
+class MangoDBHandle(Jzmongo.mongoDB):
     def __init__(self):
         super(Handle, self).__init__(host="localhost", port=27017)
 
