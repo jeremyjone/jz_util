@@ -57,7 +57,7 @@ class MangoDBHandle(Jzmongo.mongoDB):
     #     '''
     #     Query whether the database has this username.
     #     '''
-    #     cursor = self.get_cursor(dbconfig.DB_COLLECTION[self.TABLE_USER])
+    #     cursor = self.getCursor(dbconfig.DB_COLLECTION[self.TABLE_USER])
     #
     #     return cursor.find_one({"name": username}, {"_id": 0})
 
