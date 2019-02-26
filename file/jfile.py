@@ -6,11 +6,12 @@ move_file(srcfile, dstfile)   # 移动文件
 copy_file(srcfile, dstfile)   # 拷贝文件
 sizeConvert(size)  # 格式化文件大小，参数是文件的bytes大小
 hashFile(file)   # hash文件，得到一个16进制的指纹
+MD5File(file)   # MD5校验，返回MD5值
 """
 __author__ = "jeremyjone"
 __datetime__ = "2018/12/29 17:41"
-__all__ = ["__version__", "move_file", "copy_file", "sizeConvert", "hashFile"]
-__version__ = "1.0.0"
+__all__ = ["__version__", "move_file", "copy_file", "sizeConvert", "hashFile", "MD5File"]
+__version__ = "1.0.1"
 import os
 import shutil
 import hashlib
@@ -54,7 +55,7 @@ def sizeConvert(size):
         return str(size) + 'Bytes'
 
 
-CHUNKSIZE = 2048
+__CHUNKSIZE = 102400  # 速度比较快的一个值，每次读取100K
 def hashFile(file):
     '''
     对文件进行hash，得到一个16进制的指纹数据
@@ -62,7 +63,21 @@ def hashFile(file):
     h = hashlib.sha256()
     with open(file, 'rb') as f:
         while True:
-            chunk = f.read(CHUNKSIZE)
+            chunk = f.read(__CHUNKSIZE)
+            if not chunk:
+                break
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def MD5File(file):
+    '''
+    对文件进行MD5校验
+    '''
+    h = hashlib.md5()
+    with open(file, 'rb') as f:
+        while True:
+            chunk = f.read(__CHUNKSIZE)
             if not chunk:
                 break
             h.update(chunk)
