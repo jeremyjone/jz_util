@@ -37,10 +37,17 @@ class JMainWindow(QtGui.QWidget):
         with open("=== about file ===", "rU") as f:
             contents = f.read()
 
-        msg_box = QtGui.QMessageBox()
+        with open("=== about file ===", "rU") as f:
+            details = f.read()
+
+        msg_box = QtGui.QMessageBox(self)
+        msg_box.keyPressEvent = lambda event: msg_box.destroy() if event.key() == QtCore.Qt.Key_Escape else None
         msg_box.setIconPixmap(QtGui.QPixmap("=== icon file ==="))
-        msg_box.about(self, "About Title",
-                      u"%s" % contents.decode("utf8").replace("\n", "<br>"))
+        msg_box.setWindowTitle("About Title")
+        msg_box.setText(u"%s" % contents.decode("utf-8").replace("\n", "<br>"))
+        msg_box.setDetailedText(u"%s" % details.decode("utf-8"))
+
+        msg_box.exec_()
 
 
 if __name__ == "__main__":
@@ -48,5 +55,4 @@ if __name__ == "__main__":
     t = JMainWindow()
     t.show()
     sys.exit(app.exec_())
-
 
