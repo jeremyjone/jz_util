@@ -15,7 +15,7 @@ import PySide.QtGui as QtGui
 import PySide.QtCore as QtCore
 
 
-class JMainWindow(QtGui.QWidget):
+class JMainWindow(QtGui.QMainWindow):
     def __init__(self, parent=None):
         super(JMainWindow, self).__init__(parent)
         self.initUI()
