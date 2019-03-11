@@ -2,22 +2,57 @@
 # -*- coding:utf-8 -*-
 """
 File document manipulation related methods.
-move_file(srcfile, dstfile)   # 移动文件
-copy_file(srcfile, dstfile)   # 拷贝文件
+moveFile(srcfile, dstfile)   # 移动文件
+copyFile(srcfile, dstfile)   # 拷贝文件
 sizeConvert(size)  # 格式化文件大小，参数是文件的bytes大小
 hashFile(file)   # hash文件，得到一个16进制的指纹
 MD5File(file)   # MD5校验，返回MD5值
+showExplorer(filename)  # 打开指定路径的文件夹并选中文件，如果只是文件夹路径，直接打开。
+zip_files(zip_dir, zip_filename=None)  # 按zip格式压缩目标文件夹下面所有文件和文件夹
+unzip_files(_file)  # 解压zip文件到指定目录
 """
 __author__ = "jeremyjone"
 __datetime__ = "2018/12/29 17:41"
-__all__ = ["__version__", "move_file", "copy_file", "sizeConvert", "hashFile", "MD5File"]
+__all__ = ["__version__", "moveFile", "copyFile", "sizeConvert", "hashFile", "MD5File",
+           "showExplorer"]
 __version__ = "1.0.1"
 import os
 import shutil
 import hashlib
+import zipfile
 
 
-def move_file(srcfile, dstfile):
+def zip_files(zip_dir, zip_filename=None):
+    def __zip(zip_dir):
+        for folder, sub_folder, files in os.walk(zip_dir):
+            _fpath = folder.replace(zip_dir, "")
+            _fpath = _fpath and _fpath + os.sep or ""
+            zf.write(folder, _fpath)
+            for file in files:
+                zf.write(os.path.join(folder, file), _fpath + file)
+
+            for sf in sub_folder:
+                __zip(sf)
+
+    if not zip_filename:
+        zip_filename = zip_dir + ".zip"
+    zf = zipfile.ZipFile(zip_filename, 'w', zipfile.ZIP_DEFLATED)
+    __zip(zip_dir)
+    zf.close()
+
+
+def unzip_files(_file, unzip_dir=None):
+    if not unzip_dir:
+        unzip_dir = os.path.dirname(_file)
+    try:
+        zf = zipfile.ZipFile(_file)
+        zf.extractall(unzip_dir)
+        zf.close()
+    except:
+        unpackFiles(_file)
+
+
+def moveFile(srcfile, dstfile):
     if not os.path.isfile(srcfile):
         raise EOFError("%s not exist!" % (srcfile))
     else:
@@ -28,7 +63,7 @@ def move_file(srcfile, dstfile):
         print "move %s -> %s complete"%( srcfile,dstfile)
 
 
-def copy_file(srcfile, dstfile):
+def copyFile(srcfile, dstfile):
     if not os.path.isfile(srcfile):
         raise EOFError("%s not exist!")
     else:
@@ -82,3 +117,18 @@ def MD5File(file):
                 break
             h.update(chunk)
     return h.hexdigest()
+
+
+def showExplorer(filename):
+    '''
+    打开指定路径的文件夹并选中文件，如果只是文件夹路径，直接打开。
+    '''
+    if os.path.isfile(filename):
+        subprocess.Popen(r'explorer /select,"%s"' % filename.replace('\\', os.sep))
+    elif os.path.isdir(filename):
+        try:
+            os.startfile(filename)
+        except:
+            subprocess.Popen(['xdg-open', filename])
+    else:
+        raise ValueError("%s is not correct, please check." % filename)
