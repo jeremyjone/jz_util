@@ -1,10 +1,10 @@
 # -*- coding:utf8 -*-
-from __future__ import unicode_literals
 #/usr/bin/env python
 """
 @Author: jeremyjone
-Create on Thu Jun 21 13:47:24 2018
+Create on Thu Jun 21 13:47:24
 """
+from __future__ import unicode_literals
 
 
 class stack():

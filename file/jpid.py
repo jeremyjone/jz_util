@@ -1,10 +1,6 @@
 # !/usr/bin/env python
 # -*- coding:utf-8 -*-
-__author__ = "jeremyjone"
-__datetime__ = "2018/12/29 18:31"
-__all__ = ["__version__", "__document__", "is_run", "write_pid"]
-__version__ = "1.0.1"
-__document__ = """
+"""
 Check Application is running status. Create a PID file to save app's pid.
 If you want to run only one program instance, it will be useful.
 It provide two methods:
@@ -20,7 +16,15 @@ How to use:
         write_pid(pid_file, prc.pid)
     # ================== #
     The above code can normally detect the status of the program.
+
+1.0.1 update release:
+Add running apps command check, This allows you to determine the details of
+most programs.
 """
+__author__ = "jeremyjone"
+__datetime__ = "2018/12/29 18:31"
+__all__ = ["__version__", "__document__", "is_run", "write_pid"]
+__version__ = "1.0.1"
 import os
 import psutil
 import subprocess
@@ -76,11 +80,13 @@ def is_run(pid_file, filename):
 
 
 if __name__ == '__main__':
-    pid_file = "./pid.txt"
+    # pid_file = "./pid.txt"
 
-    if not is_run(pid_file, "test.py"):
-        print "nothing running..."
-        prc = subprocess.Popen("python test.py")
-        write_pid(pid_file, prc.pid)
+    # if not is_run(pid_file, "test.py"):
+    #     print "nothing running..."
+    #     prc = subprocess.Popen("python test.py")
+    #     write_pid(pid_file, prc.pid)
 
-    print "finish!"
+    # print "finish!"
+
+    help(__file__)

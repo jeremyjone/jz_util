@@ -2,7 +2,7 @@
 #/usr/bin/env python
 """
 @Author: jeremyjone
-Create on Thu Jun 21 10:52:51 2018
+Create on Thu Jun 21 10:52:51
 """
 from __future__ import unicode_literals
 
