@@ -80,7 +80,7 @@ class JLog(object):
 
     def __setLog(self):
         # 指定Logger的输出格式
-        self.formatter = logging.Formatter("%(asctime)s  %(levelname)s \n\t%(message)s")
+        self.formatter = logging.Formatter("%(asctime)s %(levelname)s:  %(message)s")
         # 设置默认的日志级别
         self.__logger.setLevel(self.__showLevel)
         if self.__log_file:
@@ -283,3 +283,4 @@ if __name__ == '__main__':
     #
     # JLOG.warning("vvvvvvvvvvvvvvvvvvvvvvvv")
     # JLOG.error("eeeeeeeeeeeeeeee")
+
