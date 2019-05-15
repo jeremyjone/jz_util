@@ -5,8 +5,7 @@ command information
 """
 __author__ = "jeremyjone"
 __datetime__ = "${DATE} ${TIME}"
-__all__ = ["__version__", "JWidget"]
-__version__ = "1.0.0"
+__all__ = ["JWidget"]
 
 
 import os, sys

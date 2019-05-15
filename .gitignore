@@ -1,0 +1,11 @@
+
+.idea/encodings.xml
+.idea/jz.iml
+.idea/markdown-navigator/profiles_settings.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+*.pyc
+desktop.ini
+.vscode/launch.json
