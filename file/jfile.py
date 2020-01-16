@@ -10,6 +10,7 @@ MD5File(file)   # MD5校验，返回MD5值
 showExplorer(filename)  # 打开指定路径的文件夹并选中文件，如果只是文件夹路径，直接打开。
 zip_files(zip_dir, zip_filename=None)  # 按zip格式压缩目标文件夹下面所有文件和文件夹
 unzip_files(_file)  # 解压zip文件到指定目录
+resource(path)  # 用于Pyinstaller打包使用，所有资源文件路径使用该函数装饰即可
 """
 __author__ = "jeremyjone"
 __datetime__ = "2018/12/29 17:41"
@@ -132,3 +133,12 @@ def showExplorer(filename):
             subprocess.Popen(['xdg-open', filename])
     else:
         raise ValueError("%s is not correct, please check." % filename)
+
+
+# 读取当前文件路径，并且拼接，用于资源文件，所有资源文件路径都是用该函数装饰，它服务于PyInstaller
+def resource(path):
+    if getattr(sys, 'frozen', False):  # 是否Bundle Resource
+        base_path = sys._MEIPASS
+    else:
+        base_path = os.path.dirname(os.path.abspath(__file__))
+    return os.path.join(base_path, path)
